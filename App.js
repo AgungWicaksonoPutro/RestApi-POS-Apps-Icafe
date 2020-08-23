@@ -7,7 +7,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 
-app.use('/api/v1/icafe', routes)
+app.use('/api/v1/icafe/', routes)
 
 const PORT = 3000;
 app.listen(PORT, ()=>{
