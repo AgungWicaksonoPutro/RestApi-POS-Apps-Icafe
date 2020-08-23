@@ -3,10 +3,10 @@ const router = express.Router();
 const historyController = require('../controllers/history')
 
 router
-    .get('/', )
+    .get('/', historyController.getAllHistory)
     .get('/:id', )
-    .post('/', )
-    .patch('/:id', )
-    .delete('/:id', )
+    .post('/', historyController.insertHistory)
+    .patch('/:id', historyController.updateHistory)
+    .delete('/:id', historyController.deleteHistory)
 
 module.exports = router

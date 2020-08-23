@@ -1,9 +1,9 @@
 const connection = require('../configs/connection');
 
-const product ={
-    getAllProduct: () =>{
+const category ={
+    getAllCategory: () =>{
         return new Promise((resolve, reject)=>{
-            connection.query('SELECT * FROM product', (err, result)=>{
+            connection.query('SELECT * FROM category', (err, result)=>{
                 if(!err){
                     resolve(result)
                 } else {
@@ -12,9 +12,9 @@ const product ={
             })
         })
     },
-    insertProduct: (data) =>{
+    insertCategory: (data) =>{
         return new Promise((resolve, reject)=>{
-            connection.query('INSERT INTO product SET ?', data, (err, result)=>{
+            connection.query('INSERT INTO category SET ?', data, (err, result)=>{
                 if(!err){
                     resolve(result)
                 } else {
@@ -23,9 +23,10 @@ const product ={
             })
         })
     },
-    deleteProduct: (id)=>{
+    deleteCategory: (id)=>{
+        console.log(id)
         return new Promise((resolve, reject)=>{
-            connection.query('DELETE FROM product WHERE idProduct = ?', id, (err, result)=>{
+            connection.query('DELETE FROM category WHERE idCategory = ?', id, (err, result)=>{
                 if(!err){
                     resolve(result)
                 } else {
@@ -34,9 +35,9 @@ const product ={
             })
         })
     },
-    updateProduct: (id, data)=>{
+    updateCategory: (id, data)=>{
         return new Promise((resolve, reject)=>{
-            connection.query('UPDATE product SET ? WHERE idProduct = ?', [data, id], (err, result)=>{
+            connection.query('UPDATE category SET ? WHERE idCategory = ?', [data, id], (err, result)=>{
                 if(!err){
                     resolve(result)
                 } else {
@@ -48,4 +49,4 @@ const product ={
 }
 
 
-module.exports = product;
+module.exports = category;
