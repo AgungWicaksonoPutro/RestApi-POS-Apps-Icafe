@@ -22,7 +22,7 @@ upload = multer({
     storage: storage, 
     fileFilter: fileFilter,
     limits: {
-        fieldSize: 1024*1
+        fieldSize: 1024
     }
 })
 
