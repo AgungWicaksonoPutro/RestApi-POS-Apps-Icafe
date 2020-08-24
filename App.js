@@ -11,7 +11,7 @@ app.use(morgan('dev'))
 
 
 app.use('/api/v1/icafe/', routes);
-
+app.use('/uploads', express.static('./uploads-img'))
 const PORT = process.env.PORT;
 app.listen(PORT, ()=>{
     console.log(`Server running`)

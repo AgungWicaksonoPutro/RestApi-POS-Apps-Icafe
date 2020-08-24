@@ -1,12 +1,14 @@
 const productModel = require('../models/product');
 const helpers = require('../helpers/response');
-const response = require('../helpers/response');
+const redis = require('redis')
+const client = redis.createClient(6379);
 
 const product = {
     getAllProduct: (req, res)=>{
         productModel.getAllProduct()
             .then((result)=>{
                 const resultProduct = result;
+                client.setex('getAllProduct', 3600 , JSON.stringify(resultProduct))
                 helpers.response(res, resultProduct, 200, null)
             })
             .catch((err)=>{
@@ -14,12 +16,13 @@ const product = {
             })
     },
     insertProduct: (req, res)=>{
-        const {nameProduct, stockProduct, descriptionProduct, imageProduct, priceProduct, idCategory} = req.body
+        console.log(req.file)
+        const {nameProduct, stockProduct, descriptionProduct, priceProduct, idCategory} = req.body
         const data = {
             nameProduct,
             stockProduct,
             descriptionProduct,
-            imageProduct,
+            imageProduct: `http://localhost:3000/uploads/${req.file.filename}`,
             priceProduct,
             idCategory,
             createAt: new Date(),
