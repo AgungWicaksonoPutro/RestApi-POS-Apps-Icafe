@@ -6,13 +6,13 @@ const jwt = require('jsonwebtoken')
 
 const users = {
     register: (req, res)=>{
-        const{firstName, lastName, email, password} = req.body
+        const{firstName, lastName, email, password, roleId} = req.body
         const data = {
             firstName,
             lastName,
             email,
             password,
-            roleId: 1,
+            roleId,
             createdAt: new Date(),
             updatedAt : new Date()
         }

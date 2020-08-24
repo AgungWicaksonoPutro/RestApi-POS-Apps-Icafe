@@ -8,7 +8,7 @@ module.exports = {
             // console.log(data)
             if(err) throw err
             if(data !== null){
-                helper.renponse(res, JSON.parse(data), 200)
+                helper.response(res, JSON.parse(data), 200)
             }else{
                 next()
             }
