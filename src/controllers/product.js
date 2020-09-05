@@ -4,12 +4,28 @@ const redis = require('redis')
 const client = redis.createClient(6379);
 
 const product = {
+    getPeoductById: (req, res) => {
+        const id = req.params.id
+        productModel.getProductById(id)
+            .then((result)=>{
+                resultProduct = result;
+                helpers.response(res, resultProduct, 200, null)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+    },
     getAllProduct: (req, res)=>{
-        productModel.getAllProduct()
+        const sortdata = req.query.sort || 'idProduct';
+        const typeSort = req.query.typesort || 'ASC'
+        const search = req.query.search
+        const limit = req.query.limit || 9
+        const offset = ((req.query.page || 1) - 1) * limit
+        productModel.getAllProduct({sortdata, typeSort, search, limit, offset})
             .then((result)=>{
                 const resultProduct = result;
                 client.setex('getAllProduct', 3600 , JSON.stringify(resultProduct))
-                helpers.response(res, resultProduct, 200, null)
+                helpers.response(res, resultProduct, 200, null, req.paginations)
             })
             .catch((err)=>{
                 console.log(err)
@@ -22,7 +38,7 @@ const product = {
             nameProduct,
             stockProduct,
             descriptionProduct,
-            imageProduct: `http://localhost:3000/uploads/${req.file.filename}`,
+            imageProduct: `http://localhost:3400/uploads/${req.file.filename}`,
             priceProduct,
             idCategory,
             createAt: new Date(),

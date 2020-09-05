@@ -1,16 +1,18 @@
 const connection = require('../configs/connection');
+const {actionQuery} = require('../helpers/response');
 
 const product ={
-    getAllProduct: () =>{
-        return new Promise((resolve, reject)=>{
-            connection.query('SELECT * FROM product', (err, result)=>{
-                if(!err){
-                    resolve(result)
-                } else {
-                    reject(new Error(err))
-                }
-            })
-        })
+    getProductById: (id)=>{
+        return actionQuery('SELECT * FROOM product WHERE idProduct = ?', id)
+    },
+    searchProduct: (search) => {
+        return actionQuery('SELECT * FROM product WHERE title LIKE ?', `%${search}%`)
+    },
+    getAllProduct: ({...arg}) =>{
+        return actionQuery(`SELECT * FROM product ${arg.search? 'WHERE nameProduct LIKE ?':''} ORDER BY ?? ${arg.typeSort} LIMIT ${arg.limit} OFFSET ${arg.offset}`, arg.search ? [`%${arg.search}%`, arg.sortdata]:arg.sortdata)
+    },
+    countProduct:() => {
+        return actionQuery(`SELECT count(*) AS totalProduct FROM product`)
     },
     insertProduct: (data) =>{
         return new Promise((resolve, reject)=>{
