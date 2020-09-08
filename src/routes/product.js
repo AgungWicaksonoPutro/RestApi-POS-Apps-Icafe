@@ -10,7 +10,7 @@ router
     .get('/', verifyAccess, pagination.products, productController.getAllProduct)
     .get('/:id', productController.getPeoductById)
     .post('/',verifyAccess, roleAccsess, multer.upload.single('imageProduct'), productController.insertProduct)
-    .patch('/:id',verifyAccess, roleAccsess, productController.updateProduct)
+    .patch('/:id',verifyAccess, roleAccsess, multer.upload.single('imageProduct'), productController.updateProduct)
     .delete('/:id',verifyAccess, roleAccsess, productController.deleteProduct)
 
 module.exports = router

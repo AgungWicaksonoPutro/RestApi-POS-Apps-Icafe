@@ -17,7 +17,7 @@ const product = {
     },
     getAllProduct: (req, res)=>{
         const sortdata = req.query.sort || 'idProduct';
-        const typeSort = req.query.typesort || 'ASC'
+        const typeSort = req.query.typesort || 'DESC'
         const search = req.query.search
         const limit = req.query.limit || 9
         const offset = ((req.query.page || 1) - 1) * limit
@@ -72,10 +72,13 @@ const product = {
             nameProduct,
             stockProduct,
             descriptionProduct,
-            imageProduct,
             priceProduct,
             idCategory,
             updateAt: new Date()
+
+        }
+        if(req.file){
+            data.imageProduct =  `http://localhost:3400/uploads/${req.file.filename}`
         }
         productModel.updateProduct(id, data)
         .then((result)=>{

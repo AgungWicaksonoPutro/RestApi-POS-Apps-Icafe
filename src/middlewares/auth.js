@@ -3,11 +3,18 @@ const jwt = require('jsonwebtoken')
 const helpers = require('../helpers/response')
 const auth = {
     verifyAccess: (req, res, next)=>{
-        console.log(req.headers)
         let token = req.headers.authorization
         token = token.split(" ")[1]
         jwt.verify(token, process.env.SECRET_KEY , function(err, decoded){
-            if(err) return helpers.response(res, {message: 'Token invalid !'}, 403, null)
+            if (err) {
+                if (err.name === 'JsonWebTokenError') {
+                  return helpers.response(res, {message: 'Token invalid !'}, 403, null)
+                } else if (err.name === 'TokenExpiredError') {
+                  return helpers.response(res, {message: 'Token Expired !'}, 403, null)
+                } else {
+                  return helpers.response(res, null, 403, err)
+                }
+              }
             req.roleId = decoded.roleId
             next()
         })

@@ -3,7 +3,6 @@ const connection = require('../configs/connection')
 module.exports = {
     response: (res, result, status, err, pagination)=>{
         const data = {};
-        console.log("Pagination" + pagination)
         if(pagination){
             data.paginations = pagination
         }

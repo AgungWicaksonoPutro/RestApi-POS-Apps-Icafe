@@ -36,9 +36,6 @@ const users = {
             if (result.length < 1) return helpers.response(res, {message: 'Email Not Found!'}, 200, null)
             const user = result[0]
             const hash = user.password
-            console.log(user)
-            console.log(password)
-            console.log(hash)
             bcrypt.compare(password, hash).then((resCompare) => {
                 if(!resCompare) return helpers.response(res, {message: 'Password Wrong!'}, 200, null)
                 const payload = {

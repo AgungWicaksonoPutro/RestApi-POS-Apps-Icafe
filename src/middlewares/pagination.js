@@ -7,7 +7,6 @@ module.exports = {
         const search = req.query.search;
         const resultData = await productModels.countProduct();
         const totalData = resultData[0].totalProduct;
-        console.log(resultData)
         const totalPage = Math.ceil(totalData/limit);
         const paginations = {
             totalData,

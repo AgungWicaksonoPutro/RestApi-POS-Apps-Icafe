@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const historyController = require('../controllers/history')
-const auth = require('../middlewares/auth')
+const {verifyAccess} = require('../middlewares/auth')
+const pagination = require('../middlewares/pagination')
 
 router
-    .get('/', historyController.getAllHistory)
+    .get('/', verifyAccess, historyController.getAllHistory)
     .get('/:id', )
-    .post('/',auth.verifyAccess, historyController.insertHistory)
-    .patch('/:id',auth.verifyAccess, historyController.updateHistory)
-    .delete('/:id',auth.verifyAccess, historyController.deleteHistory)
+    .post('/',verifyAccess, historyController.insertHistory)
+    .patch('/:id',verifyAccess, historyController.updateHistory)
+    .delete('/:id',verifyAccess, historyController.deleteHistory)
 
 module.exports = router

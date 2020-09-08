@@ -3,10 +3,15 @@ const helpers = require('../helpers/response');
 
 const history = {
     getAllHistory: (req, res)=>{
-        historyModel.getAllHistory()
+        const sortdata = req.query.sort || 'idHistory'
+        const typeSort = req.query.typesort || 'DESC'
+        const search = req.query.search
+        const limit = req.query.limit || 9
+        const offset = ((req.query.page || 1) - 1) * limit
+        historyModel.getAllHistory({sortdata, typeSort, search, limit, offset})
             .then((result)=>{
                 const resultHistory = result;
-                helpers.response(res, resultHistory, 200, null)
+                helpers.response(res, resultHistory, 200, null, req.paginations)
             })
             .catch((err)=>{
                 console.log(err)
