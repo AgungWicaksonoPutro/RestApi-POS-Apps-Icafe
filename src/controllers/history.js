@@ -4,9 +4,9 @@ const helpers = require('../helpers/response');
 const history = {
     getAllHistory: (req, res)=>{
         const sortdata = req.query.sort || 'idHistory'
-        const typeSort = req.query.typesort || 'DESC'
+        const typeSort = req.query.typesort || 'ASC'
         const search = req.query.search
-        const limit = req.query.limit || 9
+        const limit = req.query.limit || 10
         const offset = ((req.query.page || 1) - 1) * limit
         historyModel.getAllHistory({sortdata, typeSort, search, limit, offset})
             .then((result)=>{
@@ -18,10 +18,10 @@ const history = {
             })
     },
     insertHistory: (req, res)=>{
-        const {invoices, idEmploye, orders, amounts} = req.body
+        const {invoices, employe, orders, amounts} = req.body
         const data = {
             invoices,
-            idEmploye,
+            employe,
             orders,
             amounts,
             createAt: new Date(),

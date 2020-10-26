@@ -1,16 +1,15 @@
 const connection = require('../configs/connection');
+const { actionQuery } = require('../helpers/response');
 
 const history ={
-    getAllHistory: () =>{
-        return new Promise((resolve, reject)=>{
-            connection.query('SELECT * FROM history', (err, result)=>{
-                if(!err){
-                    resolve(result)
-                } else {
-                    reject(new Error(err))
-                }
-            })
-        })
+    getAllHistory: ({ ...arg }) => {
+        return actionQuery(`SELECT * FROM history ${arg.search ? 'WHERE orders LIKE ?' : ''} ORDER BY ?? ${arg.typeSort} LIMIT ${arg.limit} OFFSET ${arg.offset}`, arg.search ? [`%${arg.search}%`, arg.sortdata] : arg.sortdata)
+    },
+    searchProduct: (search) => {
+        return actionQuery('SELECT * FROM history WHERE orders LIKE ?', `%${search}%`)
+    },
+    countProduct: () => {
+        return actionQuery(`SELECT count(*) AS totalProduct FROM history`)
     },
     insertHistory: (data) =>{
         console.log(data)

@@ -9,7 +9,7 @@ const product ={
         return actionQuery('SELECT * FROM product WHERE title LIKE ?', `%${search}%`)
     },
     getAllProduct: ({...arg}) =>{
-        return actionQuery(`SELECT * FROM product ${arg.search? 'WHERE nameProduct LIKE ?':''} ORDER BY ?? ${arg.typeSort} LIMIT ${arg.limit} OFFSET ${arg.offset}`, arg.search ? [`%${arg.search}%`, arg.sortdata]:arg.sortdata)
+        return actionQuery(`SELECT product.* , category.categoryName FROM product INNER JOIN category ON product.idCategory=category.idCategory ${arg.search? 'WHERE nameProduct LIKE ?':''} ORDER BY ?? ${arg.typeSort} LIMIT ${arg.limit} OFFSET ${arg.offset}`, arg.search ? [`%${arg.search}%`, arg.sortdata]:arg.sortdata)
     },
     countProduct:() => {
         return actionQuery(`SELECT count(*) AS totalProduct FROM product`)
