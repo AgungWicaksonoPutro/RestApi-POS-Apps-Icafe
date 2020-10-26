@@ -4,9 +4,9 @@ const helpers = require('../helpers/response');
 const history = {
     getAllHistory: (req, res)=>{
         const sortdata = req.query.sort || 'idHistory'
-        const typeSort = req.query.typesort || 'ASC'
+        const typeSort = req.query.typesort || 'DESC'
         const search = req.query.search
-        const limit = req.query.limit || 10
+        const limit = req.query.limit || 30
         const offset = ((req.query.page || 1) - 1) * limit
         historyModel.getAllHistory({sortdata, typeSort, search, limit, offset})
             .then((result)=>{
